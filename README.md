@@ -56,7 +56,7 @@ Brain metastasis segmentation presents challenges in accurately delineating tumo
 Using nnU-Net's 5-fold cross-validation, we train five independent models on non-overlapping 80/20 data splits. The per-class epistemic uncertainty map is computed as:
 
 ```
-u_i^c = Var_k[p_i^(k,c)]
+$$ u_i^c = Var_k[p_i^(k,c)] $$
 ```
 
 where `p_i^(k,c)` represents the softmax probability for class `c` from fold `k`.
