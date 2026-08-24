@@ -207,13 +207,6 @@ python inference.py \
 
 </div>
 
-### Qualitative Results
-
-<div align="center">
-  <img src="assets/qualitative_comparison.png" alt="Qualitative comparison between nnU-Net baseline and URW-Met" width="800"/>
-  <p><em>Figure: Qualitative comparison showing improved NETC boundary continuity and RC coverage</em></p>
-</div>
-
 ## 📁 Repository Structure
 
 ```
