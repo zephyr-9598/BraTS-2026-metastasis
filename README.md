@@ -3,10 +3,9 @@
 <div align="center">
   <h3>Epistemic Uncertainty-Guided Supervision Weighting for Brain Metastasis Sub-region Segmentation</h3>
   
-  [![arXiv](https://img.shields.io/badge/arXiv-2026-b31b1b.svg)](https://arxiv.org/abs/)
   [![BraTS](https://img.shields.io/badge/BraTS-2026-0066cc.svg)](https://www.synapse.org/#!Synapse:syn53708249/wiki/627703)
   [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-  [![Python](https://img.shields.io/badge/Python-3.8+-3776ab.svg)](https://www.python.org/)
+  [![Python](https://img.shields.io/badge/Python-3.10+-3776ab.svg)](https://www.python.org/)
   [![PyTorch](https://img.shields.io/badge/PyTorch-1.10+-ee4c2c.svg)](https://pytorch.org/)
 </div>
 
@@ -102,7 +101,7 @@ git clone https://github.com/zephyr-9598/BraTS-2026-metastasis.git
 cd BraTS-2026-metastasis
 
 # Create conda environment
-conda create -n brats_met python=3.8
+conda create -n brats_met python=3.10
 conda activate brats_met
 
 # Install dependencies
@@ -144,7 +143,7 @@ dataset/
 2. Preprocess the dataset using nnU-Net:
 
 ```bash
-nnUNetv2_plan_and_preprocess -d DATASET_ID -pl nnUNetPlannerResEncM
+nnUNetv2_plan_and_preprocess -d DATASET_ID -tr nnUNEtReliabilityweights
 ```
 
 ### Training
@@ -158,16 +157,7 @@ for fold in 0 1 2 3 4; do
 done
 ```
 
-#### Step 2: Compute Reliability Weights
-
-```bash
-python compute_reliability_weights.py \
-  --fold_models ./results/baseline \
-  --output_dir ./weights \
-  --dataset_id DATASET_ID
-```
-
-#### Step 3: Train with Reliability-Weighted Supervision
+#### Step 2: Train with Reliability-Weighted Supervision
 
 ```bash
 # Train with pure epistemic weighting (E2a)
@@ -194,14 +184,6 @@ python inference.py \
   --output_dir ./predictions
 ```
 
-### Evaluation
-
-```bash
-python evaluate.py \
-  --predictions ./predictions \
-  --labels ./dataset/labelsTs \
-  --output ./evaluation_results.json
-```
 
 ## 📈 Results
 
@@ -247,22 +229,10 @@ BraTS-2026-metastasis/
 │   ├── train.py                  # Training script
 │   ├── inference.py              # Inference script
 │   └── evaluate.py               # Evaluation script
-├── configs/
-│   ├── baseline.yaml             # Baseline nnU-Net configuration
-│   └── epistemic.yaml            # Epistemic weighting configuration
-├── experiments/
-│   ├── baseline/                 # Baseline experiment results
-│   └── epistemic/                # Epistemic weighting experiment results
 ├── assets/
 │   ├── qualitative_comparison.png
 │   └── architecture.png
-├── tests/
-│   ├── test_uncertainty.py
-│   ├── test_loss.py
-│   └── test_weights.py
 ├── requirements.txt
-├── setup.py
-├── LICENSE
 └── README.md
 ```
 
