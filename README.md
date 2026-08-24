@@ -55,11 +55,9 @@ Brain metastasis segmentation presents challenges in accurately delineating tumo
 
 Using nnU-Net's 5-fold cross-validation, we train five independent models on non-overlapping 80/20 data splits. The per-class epistemic uncertainty map is computed as:
 
-```
-$$ u_i^c = Var_k[p_i^(k,c)] $$
-```
+$$u_i^c = \text{Var}_k\left[p_i^{(k,c)}\right]$$
 
-where `p_i^(k,c)` represents the softmax probability for class `c` from fold `k`.
+where $p_i^(k,c)$ represents the softmax probability for class $c$ from fold $k$.
 
 #### 2. Reliability Weight Computation
 
@@ -72,9 +70,7 @@ For each case `i` and class `c`, we:
 
 The weighted loss combines reliability-weighted cross-entropy and Dice loss:
 
-```
-L_rel = 1/|P| * Σ(w_i^c * L_CE) + 1/C * Σ(1 - (2*Σ(w_i^c * p^c * y^c) + ε)/(Σ(w_i^c * (p^c + y^c)) + ε))
-```
+$$L_rel = 1/|P| * Σ(w_i^c * L_CE) + 1/C * Σ(1 - (2*Σ(w_i^c * p^c * y^c) + ε)/(Σ(w_i^c * (p^c + y^c)) + ε))$$
 
 The **cross-entropy term** drives the majority of the improvement (86.39%), while the **Dice term** provides complementary regularization (12.58%).
 
